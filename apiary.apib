@@ -1,0 +1,38 @@
+`FORMAT: 1A
+HOST: http://localhost:4000/api
+
+# Hephaestus
+
+eWallet is a simple REST API to allow customers pre-load their wallet from their Debit cards and transfer virtual money as a gift to other customers within the platform.
+
+NB: 
+All endpoints other than sign up and sign in will require that you provide a bearer token to be granted access. A token is returned in the response body on signin.
+Also, use Paystack test debit cards like the one specified in the example, to test the fundAccount endpoint
+
+# Calculate virtual machine distribution [/server/manage-vm]
+
+## Calculate  virtual machine distribution  [POST ]
+
+Sign Up to the Application takes a JSON object containing user credentials
+
++ Request (application/json)
+
+            {
+                "serverType":  {"CPU": 2, "RAM": 32, "HDD": 100},
+                "virtualMachines": [
+                    {"CPU": 1, "RAM": 16, "HDD": 10},
+                    {"CPU": 1, "RAM": 16, "HDD": 10},
+                    {"CPU": 2, "RAM": 32, "HDD": 100}
+                ]
+            }
+            
++ Response 201 (application/json)
+    
+    + body
+
+            {
+                "message": "Successfully fetched the holding capacity for the server type",
+                "result": {
+                "value": 2
+                }
+            }
