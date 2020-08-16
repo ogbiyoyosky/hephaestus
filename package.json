@@ -1,0 +1,87 @@
+{
+  "name": "hephaestus",
+  "version": "1.0.0",
+  "description": "This is an assessment from Trium Networks Limited.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "npm run watch-ts",
+    "build-ts": "tsc -p src",
+    "quick-build": "npm run build-ts && npm run serve",
+    "serve": "set NODE_ENV=development && node dist/server.js",
+    "start-dev": "set NODE_ENV=development && nodemon dist/server.js",
+    "lint": "tslint src/**/*.ts -p tsconfig.json",
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*{.ts}",
+    "test": "cross-env NODE_ENV=test nyc --reporter=html ts-mocha --timeout 20000  -p  src/tsconfig.json --recursive src/**/*.test.ts",
+    "test:integration": "cross-env NODE_ENV=test  ts-mocha --timeout 20000  -p  src/tsconfig.json src/test/integration/*.test.ts --exit",
+    "coverage": "nyc npm run test:integration",
+    "watch-ts": "tsc-watch  --outDir ./dist --onSuccess \"npm run serve\" --lib ES2015 --skipLibCheck"
+  },
+  "nyc": {
+    "extension": [
+      ".ts"
+    ],
+    "include": [
+      "src/**/*.ts",
+      "src/*.ts"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "typings"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "html",
+      "text-summary"
+    ],
+    "sourceMap": true,
+    "instrument": true,
+    "all": true
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
+    "coveralls": "^3.0.2",
+    "cross-env": "^7.0.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.15.3",
+    "helmet": "^3.12.0",
+    "http-status": "^1.4.2",
+    "jest": "^23.6.0",
+    "joi": "^17.2.0",
+    "knex": "^0.21.0",
+    "morgan": "^1.8.2",
+    "multer": "^1.4.2",
+    "path": "^0.12.7",
+    "swagger-ui-express": "^4.1.4",
+    "ts-mocha": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/chai-http": "^3.0.5",
+    "@types/express": "^4.0.36",
+    "@types/lodash": "^4.14.71",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^13.13.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "concurrently": "^3.5.0",
+    "istanbul": "^1.0.0-alpha.2",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.11.0",
+    "nyc": "^13.1.0",
+    "supertest": "^3.3.0",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^8.9.0",
+    "tsc-watch": "^4.2.3",
+    "typescript": "^3.8.3"
+  }
+}
