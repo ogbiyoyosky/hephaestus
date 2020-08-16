@@ -3,11 +3,25 @@ HOST: http://localhost:4000/api
 
 # Hephaestus
 
-eWallet is a simple REST API to allow customers pre-load their wallet from their Debit cards and transfer virtual money as a gift to other customers within the platform.
+### SERVER PLANNER SERVICE
+Write an API that calculates the server hardware for a data center (to host virtual machines).
+Your API should return the number of servers that are required to host a non-empty collection of 
+virtual machines.
 
-NB: 
-All endpoints other than sign up and sign in will require that you provide a bearer token to be granted access. A token is returned in the response body on signin.
-Also, use Paystack test debit cards like the one specified in the example, to test the fundAccount endpoint
+
+This means you should implement the following operation (in UML definition):
+`+calculate(serverType: Server, virtualMachines: VirtualMachine[1..*]): int`
+
+
+All servers are from the same type. This type defines the hardware resources each server provides: 
+CPU, RAM, HDD.
+
+Each virtual machine is defined by the virtual hardware resources it needs (on a server): CPU, RAM, 
+HDD.
+
+The algorithm for the virtual machine distribution should implement a 'first fit' strategy.
+This means there is no resource optimization or 'look back': Virtual machines are always allocated on 
+the current or the next server (in case of limited resources).
 
 # Calculate virtual machine distribution [/server/manage-vm]
 
@@ -26,7 +40,7 @@ Sign Up to the Application takes a JSON object containing user credentials
                 ]
             }
             
-+ Response 201 (application/json)
++ Response 200 (application/json)
     
     + body
 
