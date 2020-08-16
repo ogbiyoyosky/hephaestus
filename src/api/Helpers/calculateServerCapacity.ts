@@ -24,7 +24,7 @@ interface IServerPlanning {
   ): number;
 }
 
-class ServerPlanning implements IServerPlanning {
+class ServerManager implements IServerPlanning {
   serverType;
   virtualMachines;
   data: Array<serverMakeup> = [];
@@ -41,6 +41,7 @@ class ServerPlanning implements IServerPlanning {
       RAM: 0,
       HDD: 0,
     };
+
     // Ensure virtual machines are sorted by "weight" or "cost".
     this.virtualMachines.sort((a, b) => {
       let costForA = a.CPU + a.RAM + a.HDD;
@@ -79,4 +80,4 @@ class ServerPlanning implements IServerPlanning {
     return this.carryingCapacity;
   }
 }
-export default ServerPlanning;
+export default ServerManager;

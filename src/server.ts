@@ -1,7 +1,7 @@
 import * as http from "http";
 import Express from "./config/express";
 
-const port = normalizePort(process.env.PORT) || 3000;
+const port = normalizePort(process.env.PORT) || 4000;
 
 // set server's port
 Express.set("port", port);

@@ -1,23 +1,19 @@
-FROM node:10-alpine
+FROM node:12
 
-RUN mkdir -p /usr/src/services/api/node_modules && chown -R node:node /usr/src/services/api
+# Add package file
+COPY package*.json ./
 
-WORKDIR /usr/src/services/api
+# Install deps
+RUN npm i
 
-COPY package*.json /usr/src/services/api/
+# Copy source
+COPY . .
 
-ENV PATH /usr/src/services/api/node_modules/.bin:$PATH
+# Build dist
+RUN npm run quick-build
 
-USER root
 
-RUN npm install --no-optional 
-# && npm cache clean --force
-
-COPY --chown=node:node . .
-
-RUN npm run build-ts
-RUN npm run serve
-
+# Expose port 3000
 EXPOSE 4000
 
-RUN source .env
+CMD npm run serve

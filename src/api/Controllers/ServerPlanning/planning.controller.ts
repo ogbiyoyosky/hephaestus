@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction, response } from "express";
-import ServerPlanning from "../../Helpers/calculateServerCapacity";
-import status = require("http-status");
+import ServerManager from "../../Helpers/calculateServerCapacity";
 
 export default class UserController {
   /**
@@ -20,7 +19,7 @@ export default class UserController {
   ) {
     try {
       const { serverType, virtualMachines } = req.body;
-      const vmManager = new ServerPlanning(serverType, virtualMachines);
+      const vmManager = new ServerManager(serverType, virtualMachines);
       const result = vmManager.calculate();
 
       return res.status(200).send({

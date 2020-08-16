@@ -1,40 +1,147 @@
-# Legacy API
+<a href="https://travis-ci.org/sidhantpanda/docker-express-typescript-boilerplate">
+  <img src="https://travis-ci.org/sidhantpanda/docker-express-typescript-boilerplate.svg?branch=master" alt="Build Status" />
+</a>
 
-## Problem
+# Express TypeScript Boilerplate
 
-There's this legacy API that contains info gathered across decades of existence. Your team needs to use one of the endpoints of that API to build a new web app.
+This repo can be used as a starting point for backend development with Nodejs. It comes bundled with Docker The development environment uses `docker build -t hephaestus-api`.
 
-The problem is that this specific endpoint returns millions of items, paginated at 100 per page.
+A few things to note in the project:
 
-Since you will need more flexibility in terms of page size, your team decides to build a frontend for this legacy API that will allow a user defined value for the number of items per page.
+- **[OpenAPI 3.0 Spec](https://github.com/sidhantpanda/docker-express-typescript-boilerplate/blob/master/openapi.json)** - A starter template to get started with API documentation using OpenAPI 3.0. This API spec is also available when running the development server at `http://localhost:3000/dev/api-docs`
+- **[.env file for configuration](#environment)** - Change server config like app port
 
-You'll be in charge of this task.
+## Installation
 
-Here's what you need to do:
+### Using `curl`
 
-- Create a simple API with just one required endpoint: `GET /items`.
-- This new API will return the list of items of the legacy API, but will accept a `page` and `perPage` arguments returning accordingly.
+```
+$ bash <(curl -s https://raw.githubusercontent.com/sidhantpanda/public/master/scripts/generate-express-ts-app.sh)
+```
 
+### Manual Method
 
-Here's what you need to know:
+#### 1. Clone this repo
 
-- The legacy API is at http://sf-legacy-api.now.sh
-- A simple `GET /items` will return the first 100 items.
-- To go to a specific page you use `GET /items?page=20` for instance.
-- The response will contain info about the total number of items, and the link to the next page.
+```
+$ git clone git@github.com:sidhantpanda/docker-express-typescript-boilerplate.git your-app-name
+$ cd your-app-name
+```
 
+#### 2. Install dependencies
 
-## Guidelines
+```
+$ npm i
+```
 
-Here's the important stuff that we take into account when reviewing this exercise:
+#### 3. Update repository name in `.github/workflows/latest.yml`
 
-- It should be simple to start your solution
-- It should contain some setup instructions
-- It should work correctly
-- It should have an automated way to prove it's working correctly
+```
+      - name: Publish image to Github Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: $GITHUB_ACTOR
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: YOUR_GITHUB_USER/YOUR_REPO_NAME/YOUR_PACKAGE_NAME
+          tags: latest
+```
 
-Ideally we want this exercise to take you **no more than 90 minutes**. You can use this time limit to infer the level of polish we expect from your solution.
+## Development
 
-## Delivery
+### Start dev server
 
-You will be given access to a github repository to work on your exercise. To submit your solution, open a pull request against the master branch. Use the body of the pull request to briefly describe your solution, what might be incomplete and why, etc.
+Starting the dev server also starts MongoDB as a service in a docker container using the compose script at `docker-compose.dev.yml`.
+
+```
+$ npm run dev
+```
+
+Running the above commands results in
+
+- 🌏**API Server** running at `http://localhost:3000`
+- ⚙️**Swagger UI** at `http://localhost:3000/dev/api-docs`
+- 🛢️**MongoDB** running at `mongodb://localhost:27017`
+
+## Packaging and Deployment
+
+#### 1. Build and run without Docker
+
+```
+$ npm run build && npm run start
+```
+
+#### 2. Run with docker
+
+```
+$ docker build -t api-server .
+$ docker run -t -i -p 3000:3000 api-server
+```
+
+#### 3. Run with docker-compose
+
+```
+$ docker-compose up
+```
+
+---
+
+## Environment
+
+To edit environment variables, create a file with name `.env` and copy the contents from `.env.default` to start with.
+
+| Var Name  | Type   | Default                           | Description                            |
+| --------- | ------ | --------------------------------- | -------------------------------------- |
+| NODE_ENV  | string | `development`                     | API runtime environment. eg: `staging` |
+| PORT      | number | `3000`                            | Port to run the API server on          |
+| MONGO_URL | string | `mongodb://localhost:27017/books` | URL for MongoDB                        |
+
+## Logging
+
+The application uses [winston](https://github.com/winstonjs/winston) as the default logger. The configuration file is at `src/logger.ts`.
+
+- All logs are saved in `./logs` directory and at `/logs` in the docker container.
+- The `docker-compose` file has a volume attached to container to expose host directory to the container for writing logs.
+- Console messages are prettified
+- Each line in error log file is a stringified JSON.
+
+### Directory Structure
+
+```
++-- scripts
+|   +-- dev.sh
++-- src
+|   +-- controllers
+|   |   +-- book
+|   |   |   +-- add.ts
+|   |   |   +-- all.ts
+|   |   |   +-- index.ts
+|   |   |   +-- search.ts
+|   +-- errors
+|   |   +-- index.ts
+|   +-- middleware
+|   |   +-- request-middleware.ts
+|   +-- models
+|   |   +-- Book.ts
+|   +-- app.ts
+|   +-- mongo-connection.ts
+|   +-- routes.ts
+|   +-- server.ts
++-- .env
++-- .env.default
++-- .eslintrc.json
++-- .gitignore
++-- .travis.yml
++-- docker-compose.dev.yml
++-- docker-compose.yml
++-- Dockerfile
++-- jest.config.js
++-- nodemon.json
++-- openapi.json
++-- package-lock.json
++-- package.json
++-- README.md
++-- tsconfig.json
+```
+
+https://hephaestus2.docs.apiary.io/

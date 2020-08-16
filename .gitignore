@@ -3,3 +3,4 @@ composer.lock
 dist
 .nyc_output
 coverage
+.env
