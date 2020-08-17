@@ -4,7 +4,7 @@ import ServerManager from "../../api/Helpers/calculateServerCapacity";
 require("ts-mocha");
 
 describe("calculate", function () {
-  it("add", function () {
+  it("calculate the server capacity", function () {
     let serverType = { CPU: 2, RAM: 32, HDD: 100 };
     let virtualMachines = [
       { CPU: 1, RAM: 16, HDD: 10 },

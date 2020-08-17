@@ -9,14 +9,13 @@
   "scripts": {
     "dev": "npm run watch-ts",
     "build-ts": "tsc -p src",
-    "quick-build": "npm run build-ts && npm run serve",
+    "quick-build": "npm run build-ts",
     "serve": "set NODE_ENV=development && node dist/server.js",
     "start-dev": "set NODE_ENV=development && nodemon dist/server.js",
     "lint": "tslint src/**/*.ts -p tsconfig.json",
     "lint:fix": "tslint --fix -c tslint.json 'src/**/*{.ts}",
     "test:integration": "cross-env NODE_ENV=test  ts-mocha --timeout 20000  -p  src/tsconfig.json src/test/integration/*.test.ts --exit",
     "test:unit": "cross-env NODE_ENV=test  ts-mocha --timeout 20000  -p  src/tsconfig.json src/test/unit/*.test.ts --exit",
-    "coverage": "nyc -r text -e .ts -x \"tests/*.test.ts\" npm run test:integration",
     "watch-ts": "tsc-watch  --outDir ./dist --onSuccess \"npm run serve\" --lib ES2015 --skipLibCheck"
   },
   "nyc": {
@@ -33,10 +32,6 @@
     ],
     "require": [
       "ts-node/register"
-    ],
-    "reporter": [
-      "html",
-      "text-summary"
     ],
     "sourceMap": true,
     "instrument": true,
