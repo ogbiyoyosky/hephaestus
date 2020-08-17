@@ -80,8 +80,6 @@ you can send request to your locally machine from the apiary docs
 
 - ⚙️**APIARY DOCS** at https://hephaestus2.docs.apiary.io/
 
-## Packaging and Deployment
-
 ### Docker Method
 
 #### 2. Run with docker
