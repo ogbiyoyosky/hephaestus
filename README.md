@@ -39,8 +39,9 @@ Example:
 
 ---
 
-General Requirements: - Create a rest API service, in any language of your choice - Ensure the service runs in Docker - The code should contain readme on how to run the service - Your submission should compile and run successfully - Free choice of dependencies, but keep it simple - Your code should be fully (unit) tested!  
- - Endeavor to write clean, maintainable code. - These requirements are just the bare minimum, add more functionality
+General Requirements: - Create a rest API service, in any language of your choice - Ensure the service runs in Docker - The code should contain readme on how to run the service - Your submission should compile and run successfully - Free choice of dependencies, but keep it simple - Your code should be fully (unit) tested!
+
+- Endeavor to write clean, maintainable code. - These requirements are just the bare minimum, add more functionality
 
 ## Installation
 
@@ -132,5 +133,3 @@ you can send request to your locally machine from the apiary docs
 ```
   docker run -t -i hephaestus-api npm run test:unit
 ```
-
-docker run -t -i hephaestus-api npm run test:unit
